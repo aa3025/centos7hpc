@@ -1,0 +1,30 @@
+#!/bin/bash
+
+
+# This script create home folder and ssh-key for an existing user; It also creates the user account on the nodes
+
+# usage ./update_user username 
+
+mkdir -p /home/$1
+cp /root/.bash_profile /home/$1/
+cp /root/.bashrc /home/$1/
+
+
+chown -R $1:$1 /home/$1
+
+USERID=$(id -u $1)
+
+echo "User ID is " $USERID
+
+pdsh adduser -M $1 -u $USERID -g $USERID -d /home/$1
+
+su $1 -c"ssh-keygen"
+
+cat /home/$1/.ssh/id_rsa.pub >> /home/$1/.ssh/authorized_keys
+
+/usr/sbin/setquota -u $1 268435456 1073741824 10000000 10000000 /home
+
+
+# note: to enable user quota support in /home filesystem, add "quota" to the options of /home in /etc/fstab.
+# After that unmount /home ("service nfs-server stop" if busy), then mount again (+ "service nfs-server start")
+# to check user quota do: "quota -us USERNAME"

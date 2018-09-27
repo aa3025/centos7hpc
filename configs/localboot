@@ -1,0 +1,7 @@
+default menu.c32
+prompt 1
+timeout 3
+MENU TITLE CentOS 7 PXE Menu
+
+LABEL Boot from the first HDD
+localboot 0

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+
+# After the HPC installed and all works, create user
+
+# usage ./newuser username "real name"
+
+/usr/sbin/adduser -c "$2" -m -d /home/$1 $1
+
+passwd $1
+# user will be asked to change password on 1st log in
+chage -d 0 $1
+
+USERID=$(id -u $1)
+
+echo "User ID is " $USERID 
+
+# we have to keep UIDs the same across the HPC, which is done below
+
+pdsh adduser -M $1 -u $USERID -d /home/$1
+
+su $1 -c"ssh-keygen"
+
+cat /home/$1/.ssh/id_rsa.pub >> /home/$1/.ssh/authorized_keys
+chown $1:$1 /home/$1/.ssh/authorized_keys
+
+
+# 256 Gb quota for users' homes (with up to 1Tb 7 day grace period)
+/usr/sbin/setquota -u $1 268435456 1073741824 10000000 10000000 /home
+
+
+# note: to enable user quota support by /home filesystem, add "quota" to the options of /home in /etc/fstab.
+# After that unmount /home ("service nfs-server stop" if busy), then mount again (+ "service nfs-server start")
+# to check user USERNAME quota do: "quota -us USERNAME"

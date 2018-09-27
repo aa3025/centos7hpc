@@ -1,0 +1,6 @@
+NM_CONTROLLED="no"
+ONBOOT="yes"
+BOOTPROTO=static
+NETMASK=255.255.0.0
+ZONE=internal
+DEVICE="ib0"
