@@ -23,21 +23,23 @@ chmod -R 600 /root/.ssh
 
 ################# Updating my MAC record in the server's PXE boot file ####################
 
-in="/var/lib/tftpboot/pxelinux/localboot"
+#in="/var/lib/tftpboot/pxelinux/localboot"
+in="/var/lib/tftpboot/pxelinux.cfg/localboot"
 
 echo $mymacs
 
 for mac in ${mymacs[@]};
 do
-	out="/var/lib/tftpboot/pxelinux/grub.cfg-01-${mac//:/-}"
+	out_efi="/var/lib/tftpboot/pxelinux/grub.cfg-01-${mac//:/-}"
+	out_bios="/var/lib/tftpboot/pxelinux/01-${mac//:/-}"
 	echo "$mac to $out"
-	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "cp -f $in  $out;exit"
-	scp -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa /boot/efi/EFI/centos/grub.cfg root@${masterIP}:${out}
-	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "chmod o+r $out"
+	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "cp -f $in  $out_bios;exit"
+	scp -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa /boot/efi/EFI/centos/grub.cfg root@${masterIP}:${out_efi}
+	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "chmod o+r *01-*"
 done 
 
 ################### Configure NETWORK #####################
-wget http://${masterIP}/ifcfg-node
+wget http://${masterIP}/ifcfg-node -O /etc/sysconfig/network-scripts/ifcfg-$device
 
 # get first net device
 device=($(ls /sys/class/net/ | grep enp))
@@ -45,7 +47,6 @@ device=($(ls /sys/class/net/ | grep enp))
 # My IP address
 IP=$(ip route get 8.8.8.8 | grep src | sed 's/.*src \(.*\)$/\1/g')
 
-cp -f ifcfg-node /etc/sysconfig/network-scripts/ifcfg-$device
 echo "DEVICE=$device" >> /etc/sysconfig/network-scripts/ifcfg-$device
 echo "ZONE=internal" >> /etc/sysconfig/network-scripts/ifcfg-$device
 
@@ -92,10 +93,9 @@ systemctl start rc-local
 
 #sync clock
 date --set="$(curl -s --head http://${masterIP}/ | grep ^Date: | sed 's/Date: //g')"
-hwclock --systohc
+hwclock --systohcp
 
-wget http://${masterIP}/sshd_config 
-cp -f sshd_config /etc/ssh/sshd_config
+wget http://${masterIP}/sshd_config -O /etc/ssh/sshd_config
 
 # setting headnode's hostname
 masterlong=$(ssh -i /root/.ssh/id_rsa ${masterIP} hostname)
