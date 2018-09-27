@@ -22,7 +22,7 @@ Do not add any users during initial installation of the head node (only root). Y
 
 5) The 2nd network adapter must be connected to the internal network of HPC (i.e. via switch or hub), where all the nodes will be booting up from. All compute nodes must be connected to the same hub with their (not necessarily) 1st network adapter.
 
-4) Download CentOS7 install DVD and run "./start.sh CentOS7xxxx.iso" from this folder. Or run it with "./start.sh -d"  to download ISO during the installation.
+4) Download CentOS7 install DVD and run "./install.sh CentOS7xxxx.iso" from this folder. Or run it with "./start.sh -d"  to download ISO during the installation.
 
 5) Once start.sh finishes, go and power up all your compute nodes (its better to do it one-by-one in an orderly fasion, their hostnames will be based on theur DHCP addresses, so if you want any kind of "system" in their naming make sure they boot with interval, so that previous one already obtained IP before the next one boots). They must be BIOS-configured to boot from network (PXE boot).
 
