@@ -1,4 +1,4 @@
-# centos7hpc-efi
+# centos7hpc
 This project is collection of bash scripts and config files to automatically deploy CentOS7-based HPC with PXE-install and kickstart file. It allows to automatically deploy Centos7-based HPC. Project's webpage is here: https://centoshpc.wordpress.com/
 
 Deployment steps:
@@ -8,29 +8,31 @@ Do not add any users during initial installation of the head node (only root). Y
 
 2) get the updated version of this archive
 
-    2.1 From  https://github.com/aa3025/centos7hpc-efi/
+    2.1 From  https://github.com/aa3025/centos7hpc/
     
-    2.2 Uncompress the archive or clone our project's git tree "git clone https://github.com/aa3025/centos7hpc-efi.git"
+    2.2 Uncompress the archive or clone our project's git tree "git clone https://github.com/aa3025/centos7hpc.git"
     
     2.3 If you failed to do above steps do not proceed further.
     
     Please do not e-mail me asking for support. These scripts are not guaranteed to work and are provided for your self-development. E-mail me though if you are interested to join this project and contribute to its development on GitHub.
 
-3) cd centos7hpc-efi
+3) cd centos7hpc
 
 4) Your installed master node (server from step (1)) must have external network adapter configured, up and running, e.g. with NetworkManager or any other way. 
 
 5) The 2nd network adapter must be connected to the internal network of HPC (i.e. via switch or hub), where all the nodes will be booting up from. All compute nodes must be connected to the same hub with their (not necessarily) 1st network adapter.
 
-4) Download CentOS7 install DVD and run "./install.sh CentOS7xxxx.iso" from this folder. Or run it with "./start.sh -d"  to download ISO during the installation.
+4) Download CentOS7 install DVD and run "./install.sh CentOS7xxxx.iso" from this folder. Or run it with "./install.sh -d"  to download ISO during the installation.
 
-5) Once start.sh finishes, go and power up all your compute nodes (its better to do it one-by-one in an orderly fasion, their hostnames will be based on theur DHCP addresses, so if you want any kind of "system" in their naming make sure they boot with interval, so that previous one already obtained IP before the next one boots). They must be BIOS-configured to boot from network (PXE boot).
+5) Once install.sh finishes, go and power up all your compute nodes (its better to do it one-by-one in an orderly fasion, their hostnames will be based on theur DHCP addresses, so if you want any kind of "system" in their naming make sure they boot with interval, so that previous one already obtained IP before the next one boots). They must be BIOS-configured to boot from network (PXE boot).
 
-6) The nodes will install, post-configure themselves, and each will modify the master's   dhcpd.conf, /etc/hosts file, /etc/pdsh/machines files.
+6) The nodes will install, post-configure themselves, and each will modify the master's dhcpd.conf, /etc/hosts file, /etc/pdsh/machines file and add their grub.cfg-xxx to /lib/var/tftpboot on master.
 
 7) Once PXE-install finishes, the nodes will reboot themselves and will mount /home and /share from server via NFS. If you want to share pre-existing /home folder with user files inside, its better to call it some different name during this installation, and when everyithing finishes, rename it to /home and restart nfs server.
 
-8) Check if HPC is deployed by doing e.g. "pdsh hostname" -> the nodes must report back their hostnames.
+8) Check if HPC is deployed by doing e.g. "pdsh hostname" -> the nodes must report back their hostnames. Its a good idea to restart dhcpd on master to swallow the modified by nodes dhcpd.conf.
+
+
 
 9) Then run "./postinstall_from_server.sh" script to add additional rpm's on the master and compute nodes and sync "/etc/hosts" file between the nodes"
 
