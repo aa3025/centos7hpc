@@ -33,22 +33,25 @@ firewall-cmd --zone=internal --permanent --change-interface=$eth_int
 firewall-cmd --zone=external --permanent --change-interface=$eth_ext
 firewall-cmd --reload
 
-# services
-firewall-cmd --permanent --zone=internal --add-service=tftp
-firewall-cmd --permanent --zone=internal --add-service=dns
-firewall-cmd --permanent --zone=internal --add-service=http
-firewall-cmd --permanent --zone=internal --add-service=nfs
-firewall-cmd --permanent --zone=internal --add-service=ssh
-firewall-cmd --permanent --zone=internal --add-service=mountd
-firewall-cmd --permanent --zone=internal --add-service=rpc-bind
+# services on internal
+#allow all on internal LAN (otherwise comment out next line and uncomment individual services below)
+firewall-cmd --permanent --zone=internal --set-target=ACCEPT
+
+#firewall-cmd --permanent --zone=internal --add-service=tftp
+#firewall-cmd --permanent --zone=internal --add-service=dns
+#firewall-cmd --permanent --zone=internal --add-service=http
+#firewall-cmd --permanent --zone=internal --add-service=nfs
+#firewall-cmd --permanent --zone=internal --add-service=ssh
+#firewall-cmd --permanent --zone=internal --add-service=mountd
+#firewall-cmd --permanent --zone=internal --add-service=rpc-bind
 
 #slurm ports
-firewall-cmd --permanent --zone=internal --add-port=6817-6818/tcp
+#firewall-cmd --permanent --zone=internal --add-port=6817-6818/tcp
 
 #ganglia web monitoring system
-firewall-cmd --permanent --zone=internal --add-port=8649/udp
-firewall-cmd --permanent --zone=internal --add-port=8649/tcp
-firewall-cmd --permanent --zone=internal --add-port=7321/tcp
+#firewall-cmd --permanent --zone=internal --add-port=8649/udp
+#firewall-cmd --permanent --zone=internal --add-port=8649/tcp
+#firewall-cmd --permanent --zone=internal --add-port=7321/tcp
 
 
 # external services
