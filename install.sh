@@ -97,12 +97,17 @@ systemctl restart nfs-server
 
 cp -f ./configs/dhcpd.conf /etc/dhcp/
 cp -f ./configs/tftp /etc/xinetd.d/
+
+sed -i 's|eth_int|'"${eth_int}"'|g' ./configs/ks-bios.cfg
+sed -i 's|eth_ext|'"${eth_ext}"'|g' ./configs/ks-efi.cfg
+sed -i 's|eth_int|'"${eth_int}"'|g' ./configs/ks-bios.cfg
+sed -i 's|eth_ext|'"${eth_ext}"'|g' ./configs/ks-efi.cfg
+
 cp -f ./configs/ks-bios.cfg /var/www/html/
 cp -f ./configs/ks-efi.cfg /var/www/html/
 cp -f ./scripts/post.sh /var/www/html/
 cp -f ./configs/ifcfg-node /var/www/html/
 cp -f ./configs/sshd_config /var/www/html/
-
 
 #################### BIOS-based nodes ####################################
 mkdir -p /tftpboot/pxelinux.cfg
