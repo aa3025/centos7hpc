@@ -30,8 +30,8 @@ echo $mymacs
 
 for mac in ${mymacs[@]};
 do
-	out_efi="/var/lib/tftpboot/pxelinux/grub.cfg-01-${mac//:/-}"
-	out_bios="/var/lib/tftpboot/pxelinux/01-${mac//:/-}"
+	out_efi="/var/lib/tftpboot/grub.cfg-01-${mac//:/-}"
+	out_bios="/var/lib/tftpboot/01-${mac//:/-}"
 	echo "$mac to $out"
 	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "cp -f $in  $out_bios;exit"
 	scp -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa /boot/efi/EFI/centos/grub.cfg root@${masterIP}:${out_efi}
