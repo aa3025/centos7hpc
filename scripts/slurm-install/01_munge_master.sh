@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+chmod +x *.sh nodes/*.sh
 
 export MUNGEUSER=9991
 groupadd -g $MUNGEUSER munge
@@ -32,8 +32,8 @@ cp /etc/munge/munge.key /share/installs/munge/
 pdsh /share/installs/munge/munge_nodes.sh
 
 echo "Some Tests:"
-munge -n
-munge -n | unmunge          # Displays information about the MUNGE key
-munge -n | pdsh unmunge
-remunge
+#munge -n
+#munge -n | unmunge          # Displays information about the MUNGE key
+#munge -n | ssh node101 unmunge
+#remunge
 
