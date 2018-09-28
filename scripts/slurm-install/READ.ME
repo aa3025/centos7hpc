@@ -1,0 +1,18 @@
+# THIS SET IS STILL IN ALPHA, needs some care
+Execute only following scripts to install slurm
+
+./01_*
+./02_*
+./03_*
+./04_*
+./05_*
+
+
+Few config files are included in this folder. 
+There was a bug with slurm (at least in slurm-15 ver) and systemctl. 
+The update_slurm.sh script will replace default 
+slurm.service file on the nodes to use different 
+location of SlurmdPidfile (must be also the same stated in slurm.conf)
+
+
+MySQL Accounting is not scripted yet
