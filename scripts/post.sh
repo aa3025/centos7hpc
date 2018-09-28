@@ -35,7 +35,7 @@ do
 	echo "$mac to $out"
 	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "cp -f $in  $out_bios;exit"
 	scp -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa /boot/efi/EFI/centos/grub.cfg root@${masterIP}:${out_efi}
-	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "chmod o+r *01-*"
+	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "chmod o+r /var/lib/tftpboot/*01-*"
 done 
 
 ################### Configure NETWORK #####################
