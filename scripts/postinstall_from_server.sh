@@ -11,7 +11,7 @@ pdsh yum -y install epel-release
 pdsh yum -y groupinstall "Development Tools"
 
 # you can add below any extra RPMs you want on the nodes. Also can install them later with pdsh
-pdsh yum -y install octave psmisc ganglia-gmond kernel-devel kernel-headers environment-modules atlas blas lapack mpich2 atlas-devel mpich2-devel gcc gcc-c++ make  blas-devel liblas liblas-devel compat-libstdc++-33
+pdsh yum -y install octave psmisc ganglia-gmond kernel-devel kernel-headers environment-modules openmpi atlas blas lapack mpich2 atlas-devel mpich2-devel gcc gcc-c++ make  blas-devel liblas liblas-devel compat-libstdc++-33
 
 
 # we will compile openmpi with knem (infiniband) support later
@@ -39,7 +39,7 @@ yum -y update
 
 ####if you do not have infinipath hardware, you can just uncomment the next line:
 
-#yum -y install openmpi openmpi-devel
+yum -y install openmpi openmpi-devel
 
 #### OR to compile knem (openfabrics alternative) and knem-enabled openmpi on the headnode in the shared location leave next line uncommented:
 
