@@ -3,7 +3,7 @@
 yum install samba* -y
 
 
-cp -f smb.conf /etc/samba/smb.conf
+cp -f ../configs/smb.conf /etc/samba/smb.conf
 
 firewall-cmd --permanent --zone=external --add-service=samba
 firewall-cmd --permanent --zone=external --add-port=137/tcp
