@@ -39,10 +39,10 @@ do
 done 
 
 ################### Configure NETWORK #####################
-wget http://${masterIP}/ifcfg-node -O /etc/sysconfig/network-scripts/ifcfg-$device
+# get active net device
+device=$( ip addr | awk '/state UP/ {print $2}' | sed 's/.$//' )
 
-# get first net device
-device=($(ls /sys/class/net/ | grep enp))
+wget http://${masterIP}/ifcfg-node -O /etc/sysconfig/network-scripts/ifcfg-$device
 
 # My IP address
 IP=$(ip route get 8.8.8.8 | grep src | sed 's/.*src \(.*\)$/\1/g')
