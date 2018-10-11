@@ -32,7 +32,7 @@ Please do not e-mail me asking for support. These scripts are not guaranteed to 
 7) Once PXE-install finishes, the nodes will reboot themselves and will mount /home and /share from server via NFS. If you want to share pre-existing /home folder with user files inside, its better to call it some different name during this installation, and when everyithing finishes, rename it to /home and restart nfs server.
 
 8) Check if HPC is deployed by doing e.g. "pdsh hostname" -> the nodes must report back their hostnames. Its a good idea to restart dhcpd on master for it to swallow /etc/dhcp/dhcpd.conf the modified by nodes.
-If you want to repeat install of a node already dployed previosly, you just need to delete its /tftpboot/grub.cfg-01-xx-xx-xx-xx-xx-xx file and its records from /etc/pdsh/machines and /etc/dhcp/dhcpd.conf. You do not need to re-run ./install.sh ! Server configuration is permanent, so it still must be able to serve new deployments after reboot (perhaps you want to check if centos iso file is still maounted after reboot and mount it if it isn't).
+If you want to repeat install of a node already deployed previosly, you just need to delete its /tftpboot/grub.cfg-01-xx-xx-xx-xx-xx-xx file and its records from /etc/pdsh/machines and /etc/dhcp/dhcpd.conf and restart it without re-running ./install.sh ! Server configuration is permanent, so it still must be able to serve new deployments after reboot (perhaps you want to check if centos iso file is still mounted after reboot of the master node and mount it if it isn't in /var/www/html/centos).
 
 9) Then you can run optional "./postinstall_from_server.sh" script to add additional rpm's on the master and compute nodes and sync "/etc/hosts" file between the nodes". 
 
