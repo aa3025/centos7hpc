@@ -71,6 +71,8 @@ echo $HOSTNAME > /etc/hostname
 ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "echo $IP	$HOSTNAME.local	$HOSTNAME >>/etc/hosts"
 ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "mkdir -p /etc/pdsh; touch /etc/pdsh/machines; echo $HOSTNAME >>/etc/pdsh/machines; echo export WCOLL=/etc/pdsh/machines >> /etc/bashrc; echo export PDSH_RCMD_TYPE=ssh >> /etc/bashrc;"
 
+$mac=`cat /sys/class/net/$(ip addr | awk '/state UP/ {print $2}' | sed 's/.$//')/address`
+
 mydhcp="host $HOSTNAME { hardware ethernet $mac; option host-name \"\"$HOSTNAME\"\"; fixed-address $SIP;}"
 ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "echo \"$mydhcp\" >>/etc/dhcp/dhcpd.conf"
 ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "ln -s $out /var/lib/tftpboot/pxelinux/node$N"
