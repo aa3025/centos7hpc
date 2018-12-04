@@ -23,7 +23,6 @@ chmod -R 600 /root/.ssh
 
 ################# Updating my MAC record in the server's PXE boot file ####################
 
-#in="/var/lib/tftpboot/pxelinux/localboot"
 in="/var/lib/tftpboot/pxelinux.cfg/localboot"
 
 echo $mymacs
@@ -75,7 +74,8 @@ $mac=`cat /sys/class/net/$(ip addr | awk '/state UP/ {print $2}' | sed 's/.$//')
 
 mydhcp="host $HOSTNAME { hardware ethernet $mac; option host-name \"\"$HOSTNAME\"\"; fixed-address $SIP;}"
 ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "echo \"$mydhcp\" >>/etc/dhcp/dhcpd.conf"
-ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "ln -s $out /var/lib/tftpboot/pxelinux/node$N"
+ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "ln -s $out_efi /var/lib/tftpboot/pxelinux/node$N.efi"
+ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "ln -s $out_bios /var/lib/tftpboot/pxelinux/node$N.bios"
 
 ################# NFS-shares #############################
 
