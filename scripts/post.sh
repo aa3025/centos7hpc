@@ -95,7 +95,7 @@ systemctl start rc-local
 
 #sync clock
 date --set="$(curl -s --head http://${masterIP}/ | grep ^Date: | sed 's/Date: //g')"
-hwclock --systohcp
+hwclock --systohc
 
 wget http://${masterIP}/sshd_config -O /etc/ssh/sshd_config
 
