@@ -30,6 +30,7 @@ chmod -R +x ./scripts/*
 yum install epel-release mc nano net-tools nfs-utils dhcp tftp httpd openssh-server firewalld tftp-server git xinetd tftp-server syslinux syslinux-tftpboot wget vsftpd opensm pdsh infiniband-diags -y
 
 ln -s /var/lib/tftpboot /tftpboot
+#mkdir -p /tftpboot/netboot
 
 # nodes will write their macs to:
 chmod -R 777 /tftpboot
