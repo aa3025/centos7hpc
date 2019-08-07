@@ -5,7 +5,7 @@ MENU TITLE CentOS 7 PXE Menu
 LABEL centos7_x64
 MENU LABEL CentOS 7 X64
 KERNEL /netboot/vmlinuz
-APPEND  initrd=/netboot/initrd.img  inst.repo=http://172.16.0.254/centos/  ks=http://172.16.0.254/ks.cfg
+APPEND  initrd=/netboot/initrd.img  inst.repo=http://172.16.0.254/centos/  ks=http://172.16.0.254/ks-bios.cfg
 
 LABEL Boot from 1st HDD
 localboot 0
