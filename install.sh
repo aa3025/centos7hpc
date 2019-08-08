@@ -77,7 +77,7 @@ echo DEVICE=\"$eth_int\" >> /etc/sysconfig/network-scripts/ifcfg-$eth_int
 echo ZONE=\"internal\" >>  /etc/sysconfig/network-scripts/ifcfg-$eth_int
 
 ifconfig $eth_int down
-ifconfig $eth_int 172.16.0.254 netmask 255.255.255.0 broadcast 172.16.0.255
+ifconfig $eth_int 172.16.0.254 netmask 255.255.0.0 broadcast 172.16.0.255
 ifconfig $eth_int up
 ifup $eth_int
 ifup $eth_ext
