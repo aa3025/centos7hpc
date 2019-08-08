@@ -51,7 +51,7 @@ echo ""
 echo "Here is the list of your network interfaces:"
 
 ip link show
-echo "Enter your INTERNAL network interface here: (e.g. enp4s0), it will be configured with IP: 172.16.0.254 (zone internal):"
+echo "Enter your INTERNAL network interface here: (e.g. enp4s0), it will be configured with IP: 172.16.0.254/16 (zone internal):"
     read eth_int
 
 echo "Enter your EXTERNAL network interface name: (e.g. enp4s1):"
