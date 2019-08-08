@@ -37,6 +37,7 @@ chmod -R 777 /tftpboot
 
 # services
 systemctl enable sshd.service
+systemctl enable httpd.service
 systemctl enable dhcpd.service
 systemctl enable nfs.service
 systemctl enable tftp.service
