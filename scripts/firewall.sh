@@ -39,9 +39,9 @@ firewall-cmd --permanent --zone=internal --set-target=ACCEPT
 
 #firewall-cmd --permanent --zone=internal --add-service=tftp
 #firewall-cmd --permanent --zone=internal --add-service=dns
-#firewall-cmd --permanent --zone=internal --add-service=http
+firewall-cmd --permanent --zone=internal --add-service=http
 #firewall-cmd --permanent --zone=internal --add-service=nfs
-#firewall-cmd --permanent --zone=internal --add-service=ssh
+firewall-cmd --permanent --zone=internal --add-service=ssh
 #firewall-cmd --permanent --zone=internal --add-service=mountd
 #firewall-cmd --permanent --zone=internal --add-service=rpc-bind
 
