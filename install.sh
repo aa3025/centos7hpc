@@ -116,11 +116,11 @@ mkdir -p /tftpboot/pxelinux.cfg
 
 cp -f ./configs/default /tftpboot/pxelinux.cfg/
 cp -f ./configs/localboot /tftpboot/pxelinux.cfg/
-cp -v /usr/share/syslinux/pxelinux.0 /tftpboot/
-cp -v /usr/share/syslinux/menu.c32 /tftpboot/
-cp -v /usr/share/syslinux/memdisk /tftpboot/
-cp -v /usr/share/syslinux/mboot.c32 /tftpboot/
-cp -v /usr/share/syslinux/chain.c32 /tftpboot/
+cp -v ./configs/syslinux/pxelinux.0 /tftpboot/
+cp -v ./configs/syslinux/menu.c32 /tftpboot/
+cp -v ./configs/syslinux/memdisk /tftpboot/
+cp -v ./configs/syslinux/mboot.c32 /tftpboot/
+cp -v ./configs/syslinux/chain.c32 /tftpboot/
 
 ## ##################### CentOS7 ISO image is mounted in the http docs tree #################
 echo ISO is $isoname ...

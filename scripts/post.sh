@@ -30,7 +30,7 @@ echo $mymacs
 for mac in ${mymacs[@]};
 do
 	out_efi="/var/lib/tftpboot/grub.cfg-01-${mac//:/-}"
-	out_bios="/var/lib/tftpboot/01-${mac//:/-}"
+	out_bios="/var/lib/tftpboot/pxelinux.cfg/01-${mac//:/-}"
 	echo "$mac to $out"
 	ssh -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa ${masterIP} "cp -f $in  $out_bios;exit"
 	scp -v -o "StrictHostKeyChecking no" -i /root/.ssh/id_rsa /boot/efi/EFI/centos/grub.cfg root@${masterIP}:${out_efi}
@@ -70,12 +70,13 @@ echo $HOSTNAME > /etc/hostname
 ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "echo $IP	$HOSTNAME.local	$HOSTNAME >>/etc/hosts"
 ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "mkdir -p /etc/pdsh; touch /etc/pdsh/machines; echo $HOSTNAME >>/etc/pdsh/machines; echo export WCOLL=/etc/pdsh/machines >> /etc/bashrc; echo export PDSH_RCMD_TYPE=ssh >> /etc/bashrc;"
 
-$mac=`cat /sys/class/net/$(ip addr | awk '/state UP/ {print $2}' | sed 's/.$//')/address`
+mac=`cat /sys/class/net/$(ip addr | awk '/state UP/ {print $2}' | sed 's/.$//')/address`
+
 
 mydhcp="host $HOSTNAME { hardware ethernet $mac; option host-name \"\"$HOSTNAME\"\"; fixed-address $SIP;}"
 ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "echo \"$mydhcp\" >>/etc/dhcp/dhcpd.conf"
-ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "ln -s $out_efi /var/lib/tftpboot/pxelinux/node$N.efi"
-ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "ln -s $out_bios /var/lib/tftpboot/pxelinux/node$N.bios"
+ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "ln -s $out_efi /var/lib/tftpboot/pxelinux.cfg/node$N.efi"
+ssh -i /root/.ssh/id_rsa -o "StrictHostKeyChecking no " root@${masterIP} "ln -s $out_bios /var/lib/tftpboot/pxelinux.cfg/node$N.bios"
 
 ################# NFS-shares #############################
 

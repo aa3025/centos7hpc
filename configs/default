@@ -1,7 +1,7 @@
 default menu.c32
 prompt 1
 timeout 10
-MENU TITLE CentOS 7 PXE Menu
+MENU TITLE CentOS 7 PXE Install Menu
 LABEL centos7_x64
 MENU LABEL CentOS 7 X64
 KERNEL vmlinuz
